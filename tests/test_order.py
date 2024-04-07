@@ -36,7 +36,7 @@ class TestOrder:
         order_feed_page.go_to_page(URLS.ORDER_FEED)
 
         counter_before = int(order_feed_page.get_text_element(locator))
-        number = OrderRequests.create_order(headers)
+        number = order_feed_page.create_order_with_API(headers)
         order_feed_page.wait_order_in_list(number, LocatorsOrder.ORDER_FEED_LIST)
         counter_after = int(order_feed_page.get_text_element(locator))
 
@@ -45,9 +45,8 @@ class TestOrder:
     @allure.title('Тест: после оформления заказа его номер появляется в разделе В работе')
     def test_order_in_progress(self, driver, user_registration):
         _, headers = user_registration
-        progress = OrderFeedPage(driver)
-        progress.go_to_page(URLS.ORDER_FEED)
-
-        number = OrderRequests.create_order(headers)
-        order_in_progress = progress.wait_order_in_list(number, LocatorsOrder.ORDER_IN_PROGRESS)
+        order_page = OrderFeedPage(driver)
+        number = order_page.create_order_with_API(headers)
+        order_page.go_to_page(URLS.ORDER_FEED)
+        order_in_progress = order_page.wait_order_in_list(number, LocatorsOrder.ORDER_IN_PROGRESS)
         assert number in order_in_progress
