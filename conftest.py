@@ -12,7 +12,6 @@ def pytest_addoption(parser):
     parser.addoption('--browser', default='chrome', help="Choose browser: chrome or firefox")
     parser.addoption('--headless', default='true', help='headless options: "true" or "false"')
 
-
 @pytest.fixture
 @allure.title(f'Запуск драйвера')
 def driver(request):
@@ -34,7 +33,6 @@ def driver(request):
         driver = webdriver.Chrome(options=chrome_option)
     else:
         raise pytest.UsageError("--browser_name should be chrome or firefox")
-    request.addfinalizer(lambda *args: driver.quit())
     driver.get(URLS.HOMEPAGE)
     yield driver
     driver.quit()
