@@ -1,22 +1,40 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOption
+from selenium.webdriver.firefox.options import Options as FirefoxOption
 
 from data import *
 from helper import *
 from pages.account_page import AccountPage
 
 
-@pytest.fixture(params=['chrome', 'firefox'])
+def pytest_addoption(parser):
+    parser.addoption('--browser', default='chrome', help="Choose browser: chrome or firefox")
+    parser.addoption('--headless', default='true', help='headless options: "true" or "false"')
+
+
+@pytest.fixture
 @allure.title(f'Запуск драйвера')
 def driver(request):
-    if request.param == 'chrome':
-        driver = webdriver.Chrome()
-    elif request.param == 'firefox':
-        driver = webdriver.Firefox()
+    browser = request.config.getoption('--browser')
+    headless = request.config.getoption('--headless')
 
+    if browser == 'firefox':
+        firefox_option = FirefoxOption()
+        if headless == 'true':
+            firefox_option.add_argument('--headless')
+            firefox_option.add_argument('--ignore-certificate-errors')
+        driver = webdriver.Firefox(options=firefox_option)
+    elif browser == 'chrome':
+        chrome_option = ChromeOption()
+        if headless == 'true':
+            chrome_option.add_argument('--headless')
+        chrome_option.add_argument('--ignore-certificate-errors')
+        chrome_option.add_argument("--window-size=1920,1080")
+        driver = webdriver.Chrome(options=chrome_option)
     else:
         raise pytest.UsageError("--browser_name should be chrome or firefox")
-    driver.set_window_size(1920, 1080)
+    request.addfinalizer(lambda *args: driver.quit())
     driver.get(URLS.HOMEPAGE)
     yield driver
     driver.quit()

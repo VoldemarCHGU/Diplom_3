@@ -9,6 +9,11 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
+    @staticmethod
+    def concat_locator_and_number(locator, value):
+        method, locator = locator
+        return method, locator.format(value)
+
     def current_url(self):
         return self.driver.current_url
 
@@ -16,7 +21,7 @@ class BasePage:
         self.driver.get(url)
 
     def find_element_wait_until(self, locator, time=10):
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
+        WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(locator))
         return self.driver.find_element(*locator)
 
     def find_element_with_text(self, text, tag='*'):

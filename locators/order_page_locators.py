@@ -9,3 +9,4 @@ class LocatorsOrder:
     TODAY_ORDERS = (By.XPATH, './/p[text()="Выполнено за сегодня:"]/following::p[contains(@class,"OrderFeed_number")]')
     ORDER_IN_PROGRESS = (By.XPATH, './/ul[contains(@class,"OrderFeed_orderListReady")]/li')
     ORDERS_DONE = (By.XPATH, '//li[text()="Все текущие заказы готовы!"]')
+    NEED_ORDER_LIST = (By.XPATH, '//li[text()="{}"]')

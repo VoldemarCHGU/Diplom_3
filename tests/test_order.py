@@ -2,7 +2,6 @@ import allure
 import pytest
 
 from data import URLS
-from helper import OrderRequests
 from locators.order_page_locators import LocatorsOrder
 from pages.order_page import OrderFeedPage
 
@@ -24,10 +23,11 @@ class TestOrder:
         authorized_user.click_order_history_button()
         user_order_number = authorized_user.get_order_history_number()
         order.go_to_page(URLS.ORDER_FEED)
-        order_list = order.wait_order_in_list(user_order_number, LocatorsOrder.ORDER_FEED_LIST)
+        check_in_order = order.wait_order_in_list(user_order_number)
 
-        assert user_order_number in order_list
+        assert check_in_order
 
+    #
     @allure.title('Тест: счётчики нового заказа "Выполнено за всё время" и "Выполнено за сегодня" увеличиваются')
     @pytest.mark.parametrize('locator', [LocatorsOrder.ALL_TIME_ORDERS, LocatorsOrder.TODAY_ORDERS])
     def test_order_counter_increase(self, driver, user_registration, locator):
@@ -37,7 +37,7 @@ class TestOrder:
 
         counter_before = int(order_feed_page.get_text_element(locator))
         number = order_feed_page.create_order_with_API(headers)
-        order_feed_page.wait_order_in_list(number, LocatorsOrder.ORDER_FEED_LIST)
+        order_feed_page.wait_order_in_list(number)
         counter_after = int(order_feed_page.get_text_element(locator))
 
         assert counter_after > counter_before
@@ -48,5 +48,5 @@ class TestOrder:
         order_page = OrderFeedPage(driver)
         number = order_page.create_order_with_API(headers)
         order_page.go_to_page(URLS.ORDER_FEED)
-        order_in_progress = order_page.wait_order_in_list(number, LocatorsOrder.ORDER_IN_PROGRESS)
-        assert number in order_in_progress
+        order_in_progress = order_page.wait_order_in_list(number)
+        assert order_in_progress

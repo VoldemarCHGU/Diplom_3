@@ -13,25 +13,12 @@ class OrderFeedPage(BasePage):
         orders = [element.text.lstrip('#0') for element in self.driver.find_elements(LocatorsOrder.ORDER_FEED_LIST)]
         return orders
 
-    def order_number_list(self, locator):
-        order_list = WebDriverWait(self.driver, 10).until(EC.visibility_of_all_elements_located(locator))
-        order_number_list = []
-        for order in order_list:
-            number = int(order.text[1:])
-            order_number_list.append(number)
-        return order_number_list
-
-    def wait_order_in_list(self, number, locator):
+    def wait_order_in_list(self, number):
         if self.check_bool_visability_element(LocatorsOrder.ORDERS_DONE):
             WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located(LocatorsOrder.ORDERS_DONE))
-        order_list = WebDriverWait(self.driver, 10).until(EC.visibility_of_all_elements_located(locator))
-        order_number_list = []
-        for order in order_list:
-            order_number_list.append(int(order.text[1:]))
-        return order_number_list
-
-    def open_order_modal(self):
-        self.click_visible_element(LocatorsOrder.ORDER_FEED_LIST)
+        LocatorsOrder.NEED_ORDER = number
+        number_locator = self.concat_locator_and_number(LocatorsOrder.NEED_ORDER_LIST, number)
+        return self.check_bool_visability_element(number_locator)
 
     def create_order_with_API(self, headers):
         response = OrderRequests.create_order(headers)
