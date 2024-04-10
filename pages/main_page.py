@@ -1,5 +1,4 @@
 import allure
-from selenium.webdriver import ActionChains
 
 from locators.main_page_locators import LocatorsMain
 from pages.base_page import BasePage
@@ -33,7 +32,7 @@ class MainPage(BasePage):
     def get_modal_class(self):
         return self.get_attribute_value(LocatorsMain.MODAL, 'class')
 
-    def get_count_ingredients_in_burger(self, count=None):
+    def get_count_ingredients_in_burger(self):
         return int(self.get_text_element(LocatorsMain.COUNTER))
 
     def get_text_in_header(self):

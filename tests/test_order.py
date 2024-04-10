@@ -21,7 +21,7 @@ class TestOrder:
     def test_user_order_in_order_feed(self, driver, authorized_user, create_order_after_auth):
         order = OrderFeedPage(driver)
         authorized_user.click_order_history_button()
-        user_order_number = authorized_user.get_order_history_number()
+        user_order_number = authorized_user.get_order_number()
         order.go_to_page(URLS.ORDER_FEED)
         check_in_order = order.wait_order_in_list(user_order_number)
 

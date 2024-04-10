@@ -1,6 +1,3 @@
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-
 from helper import OrderRequests
 from locators.order_page_locators import LocatorsOrder
 from pages.base_page import BasePage
