@@ -20,8 +20,12 @@ class BasePage:
     def go_to_page(self, url):
         self.driver.get(url)
 
-    def find_element_wait_until(self, locator, time=10):
-        WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(locator))
+    def find_element_wait_until(self, locator, time=30):
+        WebDriverWait(self.driver, time).until(EC.visibility_of_element_located(locator))
+        return self.driver.find_element(*locator)
+
+    def find_all_elements_wait_until(self, locator, time=30):
+        WebDriverWait(self.driver, time).until(EC.visibility_of_all_elements_located(locator))
         return self.driver.find_element(*locator)
 
     def find_element_with_text(self, text, tag='*'):
@@ -30,8 +34,11 @@ class BasePage:
     def check_bool_visability_element(self, locator):
         return bool(self.find_element_wait_until(locator))
 
-    def check_bool_invisability_element(self, locator):
+    def check_bool_until_not_invisability_element(self, locator):
         return bool(WebDriverWait(self.driver, 10).until_not(EC.visibility_of_element_located(locator)))
+
+    def wait_until_invisibility_element(self, locator):
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located(locator))
 
     def wait_hide_text_in_element(self, locator, text):
         WebDriverWait(self.driver, 20).until_not(EC.text_to_be_present_in_element(locator, text))

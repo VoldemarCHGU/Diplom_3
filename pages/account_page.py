@@ -28,8 +28,9 @@ class AccountPage(BasePage):
         self.go_to_page(URLS.ACCOUNT)
         self.click_visible_element(LocatorsAccount.ORDER_HISTORY_BUTTON)
 
-    def get_order_number(self, locator):
-        WebDriverWait(self.driver, 30).until_not(EC.text_to_be_present_in_element(locator, '9999'))
+    def get_order_number(self):
+        locator = LocatorsAccount.ORDER_NUMBER_HISTORY
+        self.wait_hide_text_in_element(locator, '9999')
         web_raw_order_number = self.get_text_element(locator)
         return int(web_raw_order_number[-5:])
 
