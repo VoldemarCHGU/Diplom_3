@@ -42,4 +42,4 @@ class MainPage(BasePage):
         self.check_bool_until_not_invisability_element(LocatorsMain.MODAL)
 
     def check_details_modal_window(self):
-        self.check_bool_visability_element(LocatorsMain.DETAILS_MODAL)
+        return self.check_bool_visability_element(LocatorsMain.DETAILS_MODAL)

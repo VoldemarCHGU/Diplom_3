@@ -26,4 +26,4 @@ class OrderFeedPage(BasePage):
         self.click_visible_element(LocatorsOrder.ORDER_FEED_LIST)
 
     def check_bool_visability_orders_details(self):
-        self.check_bool_visability_element(LocatorsOrder.ORDER_DETAILS)
+        return self.check_bool_visability_element(LocatorsOrder.ORDER_DETAILS)

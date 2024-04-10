@@ -29,6 +29,6 @@ class TestForgotPass:
     def test_show_pass_active_input(self, driver):
         forgot_page = ForgotPassPage(driver)
         forgot_page.go_to_reset_pass_page()
-        pass_input = self.find_forgot_pass_input()
+        pass_input = forgot_page.find_forgot_pass_input()
         forgot_page.click_on_show_password()
         assert 'input_status_active' in pass_input.get_attribute('class')

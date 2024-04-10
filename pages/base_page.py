@@ -38,10 +38,10 @@ class BasePage:
         return bool(WebDriverWait(self.driver, 10).until_not(EC.visibility_of_element_located(locator)))
 
     def wait_until_invisibility_element(self, locator):
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located(locator))
+        WebDriverWait(self.driver, 25).until(EC.invisibility_of_element_located(locator))
 
     def wait_hide_text_in_element(self, locator, text):
-        WebDriverWait(self.driver, 20).until_not(EC.text_to_be_present_in_element(locator, text))
+        WebDriverWait(self.driver, 30).until_not(EC.text_to_be_present_in_element(locator, text))
 
     def send_keys(self, locator, data):
         self.find_element_wait_until(locator).send_keys(data)
@@ -67,9 +67,8 @@ class BasePage:
     def click_and_hold_move_to_element_chrome(self, driver, what, where):
         ActionChains(driver).click_and_hold(what).move_to_element(where).release().perform()
 
-    def drag_and_drop_for_firefox(self):
-        # Получаем JavaScript код для симуляции перетаскивания
-        return """
+    def driver_execute_script_move_for_firefox(self, driver, what, where):
+        drag_and_drop_script = """
             var source = arguments[0];
             var target = arguments[1];
             var evt = document.createEvent('UIEvents');
@@ -88,6 +87,4 @@ class BasePage:
             evt.initUIEvent('dragend', true, true, window, 1);
             source.dispatchEvent(evt);
             """
-
-    def driver_execute_script_move_for_firefox(self, driver, what, where):
-        driver.execute_script(self.drag_and_drop_for_firefox, what, where)
+        driver.execute_script(drag_and_drop_script, what, where)

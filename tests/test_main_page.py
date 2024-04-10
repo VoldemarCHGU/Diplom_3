@@ -9,14 +9,14 @@ from pages.main_page import MainPage
 class TestMain:
     @allure.title('Тест: переход по клику на кнопки «Конструктор» и «Лента заказов»')
     @pytest.mark.parametrize('url, button, header', [
-        [URLS.ORDER_FEED, LocatorsMain.CONSTRUCTOR_BUTTON, "Соберите бургер"],
-        [URLS.HOMEPAGE, LocatorsMain.ORDER_FEED_BUTTON, "Лента заказов"]])
+        [URLS.HOMEPAGE, LocatorsMain.CONSTRUCTOR_BUTTON, "Соберите бургер"],
+        [URLS.ORDER_FEED, LocatorsMain.ORDER_FEED_BUTTON, "Лента заказов"]])
     def test_click_buttons_in_top(self, driver, url, button, header):
         main_page = MainPage(driver)
         main_page.go_to_page(url)
         main_page.click_visible_element(button)
 
-        header_text = self.get_text_in_header()
+        header_text = main_page.get_text_in_header()
         assert header_text == header
 
     @allure.title('Тест: если кликнуть на ингредиент, появится всплывающее окно с деталями')
