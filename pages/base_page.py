@@ -60,3 +60,34 @@ class BasePage:
 
     def get_attribute_value(self, locator, attribute):
         return self.find_element_wait_until(locator).get_attribute(attribute)
+
+    def get_browser_name(self, driver):
+        return driver.command_executor.browser_name
+
+    def click_and_hold_move_to_element_chrome(self, driver, what, where):
+        ActionChains(driver).click_and_hold(what).move_to_element(where).release().perform()
+
+    def drag_and_drop_for_firefox(self):
+        # Получаем JavaScript код для симуляции перетаскивания
+        return """
+            var source = arguments[0];
+            var target = arguments[1];
+            var evt = document.createEvent('UIEvents');
+            evt.initUIEvent('dragstart', true, true, window, 1);
+            source.dispatchEvent(evt);
+            evt = document.createEvent('UIEvents');
+            evt.initUIEvent('dragenter', true, true, window, 1);
+            target.dispatchEvent(evt);
+            evt = document.createEvent('UIEvents');
+            evt.initUIEvent('dragover', true, true, window, 1);
+            target.dispatchEvent(evt);
+            evt = document.createEvent('UIEvents');
+            evt.initUIEvent('drop', true, true, window, 1);
+            target.dispatchEvent(evt);
+            evt = document.createEvent('UIEvents');
+            evt.initUIEvent('dragend', true, true, window, 1);
+            source.dispatchEvent(evt);
+            """
+
+    def driver_execute_script_move_for_firefox(self, driver, what, where):
+        driver.execute_script(self.drag_and_drop_for_firefox, what, where)
