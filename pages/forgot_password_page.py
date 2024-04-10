@@ -8,9 +8,7 @@ class ForgotPassPage(BasePage):
 
     def send_email(self):
         email = generate_user_data()['email']
-        # element = self.find_element_wait_until()
         self.send_keys(locator=LocatorsForgotPass.EMAIL_INPUT, data=email)
-        # self.find_element_wait_until().send_keys(email)
 
     def click_forgot_pass(self):
         self.click_visible_element(LocatorsForgotPass.FORGOT_PASS_LINK)
@@ -18,7 +16,6 @@ class ForgotPassPage(BasePage):
 
     def click_reset_password_button(self):
         self.click_visible_element(LocatorsForgotPass.RESET_BUTTON)
-        # self.wait_until_url_change(URLS.FORGOT_PASS)
 
     def go_to_reset_pass_page(self):
         self.go_to_page(URLS.FORGOT_PASS)

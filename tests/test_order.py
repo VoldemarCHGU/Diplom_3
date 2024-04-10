@@ -27,7 +27,6 @@ class TestOrder:
 
         assert check_in_order
 
-    #
     @allure.title('Тест: счётчики нового заказа "Выполнено за всё время" и "Выполнено за сегодня" увеличиваются')
     @pytest.mark.parametrize('locator', [LocatorsOrder.ALL_TIME_ORDERS, LocatorsOrder.TODAY_ORDERS])
     def test_order_counter_increase(self, driver, user_registration, locator):
