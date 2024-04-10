@@ -27,3 +27,6 @@ class ForgotPassPage(BasePage):
 
     def click_on_show_password(self):
         self.click_visible_element(LocatorsForgotPass.SHOW_PASS_BUTTON)
+
+    def find_forgot_pass_input(self):
+        return self.find_element_wait_until(LocatorsForgotPass.PASS_INPUT)

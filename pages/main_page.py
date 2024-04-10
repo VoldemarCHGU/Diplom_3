@@ -23,6 +23,9 @@ class MainPage(BasePage):
     def click_order_button(self):
         self.click_visible_element(LocatorsMain.CREATE_ORDER)
 
+    def click_ingredient(self):
+        self.click_visible_element(LocatorsMain.INGREDIENT)
+
     @allure.step("Закрытие окна с деталями об ингредиенте")
     def close_ingredient_detail_window(self):
         self.click_visible_element(LocatorsMain.MODAL_CLOSE)
@@ -32,3 +35,12 @@ class MainPage(BasePage):
 
     def get_count_ingredients_in_burger(self, count=None):
         return int(self.get_text_element(LocatorsMain.COUNTER))
+
+    def get_text_in_header(self):
+        return self.get_text_element(LocatorsMain.HEADER)
+
+    def check_close_modal_window(self):
+        self.check_bool_until_not_invisability_element(LocatorsMain.MODAL)
+
+    def check_details_modal_window(self):
+        self.check_bool_visability_element(LocatorsMain.DETAILS_MODAL)

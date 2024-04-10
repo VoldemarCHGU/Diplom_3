@@ -13,8 +13,8 @@ class TestOrder:
         order = OrderFeedPage(driver)
 
         order.go_to_page(URLS.ORDER_FEED)
-        order.click_visible_element(LocatorsOrder.ORDER_FEED_LIST)
-        check_modal = order.check_bool_visability_element(LocatorsOrder.ORDER_DETAILS)
+        order.click_order_feed()
+        check_modal = order.check_bool_visability_orders_details()
         assert check_modal
 
     @allure.title('Тест: заказы пользователя из раздела «История заказов» отображаются на странице «Лента заказов»')

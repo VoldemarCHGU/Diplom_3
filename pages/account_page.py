@@ -44,5 +44,5 @@ class AccountPage(BasePage):
     def go_to_profile(self):
         self.click_visible_element(LocatorsMain.PROFILE_BTN)
 
-    def get_order_history_number(self):
-        return self.get_order_number(LocatorsAccount.ORDER_NUMBER_HISTORY)
+    def click_to_account(self):
+        self.click_visible_element(LocatorsAccount.ACCOUNT_LINK)

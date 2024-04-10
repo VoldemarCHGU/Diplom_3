@@ -1,7 +1,6 @@
 import allure
 
 from data import URLS
-from locators.forgot_pass_page_locators import LocatorsForgotPass
 from pages.forgot_password_page import ForgotPassPage
 
 
@@ -30,6 +29,6 @@ class TestForgotPass:
     def test_show_pass_active_input(self, driver):
         forgot_page = ForgotPassPage(driver)
         forgot_page.go_to_reset_pass_page()
-        pass_input = forgot_page.find_element_wait_until(LocatorsForgotPass.PASS_INPUT)
+        pass_input = self.find_forgot_pass_input()
         forgot_page.click_on_show_password()
         assert 'input_status_active' in pass_input.get_attribute('class')
